@@ -1,0 +1,34 @@
+/* ==========================================================================
+   home.css - ESTILOS EXCLUSIVOS DA PÁGINA INICIAL (INDEX.HTML)
+   ========================================================================== */
+
+/* 1. TRANSIÇÃO DE FADE IN MAIOR */
+header, 
+main, 
+footer {
+    /* Aumentado de 0.5s para 1.5s para um efeito mais duradouro e imponente */
+    transition: opacity 4.5s cubic-bezier(0.4, 0, 0.2, 1) !important; 
+}
+
+/* 2. TRAVA TOTAL DE SCROLL E TELA NO MOBILE */
+@media (max-width: 768px) {
+    body {
+        /* Bloqueia completamente o scroll/deslize do dedo para cima ou para baixo */
+        overflow: hidden !important;
+        position: fixed !important;
+        width: 100vw !important;
+        height: 100dvh !important;
+    }
+
+    #fundo {
+        /* Garante o foco perfeito no rosto do surfista prateado */
+        object-position: center 35% !important;
+        
+        /* Trava física absoluta no fundo */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100dvh !important;
+    }
+}
