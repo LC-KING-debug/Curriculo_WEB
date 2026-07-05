@@ -23,12 +23,14 @@ html {
 body {
     min-height: 100vh;
     overflow-x: hidden;
-    font-family: "Inter", sans-serif;
+    font-family: times new roman, sans-serif;text-rendering: optimizeLegibility;
     font-size: 1.1rem;
     color: white;
     display: flex;
     flex-direction: column;
-    background-color: #050508; /* Fallback de cor escura para evitar flashes brancos */
+    background-color: #050508;
+    
+    
     
     /* Suavização de renderização de fontes sobre fundos escuros */
     -webkit-font-smoothing: antialiased;
@@ -71,21 +73,23 @@ body.loaded footer {
    ========================================================================== */
 #fundo {
     position: fixed;
+    /* Trava o vídeo nas 4 bordas da tela de forma cirúrgica */
     top: 0;
     left: 0;
-    /* Usamos vmin e uma trava de segurança para cobrir a tela 
-       sem sofrer com a alteração da barra de endereços do celular */
-    width: 100vw;
-    height: 100vh;
-    min-height: -webkit-fill-available; 
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    
+    /* REMOVIDO: height: 100vh ou 100% (isso causava o bug) */
+    
     object-fit: cover;
     z-index: -2;
     pointer-events: none;
     
-    /* Mantém centralizado por padrão no Desktop */
+    /* Alinhamento padrão do Desktop */
     object-position: center center;
     
-    /* Hardware acceleration máxima para isolar o vídeo da rolagem */
+    /* Força o isolamento total da camada na GPU para não sofrer com o scroll */
     will-change: transform;
     transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0);
@@ -140,19 +144,24 @@ p { line-height: 1.7; margin-bottom: 15px; }
 /* ==========================================================================
    MÍDIAS RESPONSIVAS & OTIMIZAÇÃO CRÍTICA MOBILE
    ========================================================================== */
-
 @media (max-width: 768px) {
     #fundo {
-        /* Alinha horizontalmente no centro e verticalmente a 35% (puxa o rosto para baixo) */
+        /* Garante que o rosto do surfista fique na posição que você pediu */
         object-position: center 35% !important; 
         
-        /* Trava física para impedir que o motor de renderização do Android 
-           atualize o layout do vídeo durante o scroll do dedo */
-        height: 100% !important;
+        /* Força o navegador a fixar o tamanho pelas bordas físicas do aparelho, 
+           impedindo o efeito "elástico" ou puxadas quando a barra de ferramentas some */
         position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        
+        /* Nova unidade dinâmica que ignora a barra de navegação no mobile moderno */
+        height: 100dvh !important; 
     }
     
-    /* O restante do seu bloco mobile (h1, h2, glass-box) continua igual aqui embaixo... */
+    /* Seus outros estilos mobile (h1, h2, glass-box) continuam aqui para baixo... */
+
 
 
     /* FOCO NO DESEMPENHO MOBILE: Desativa a animação infinita de gradiente nos textos.
