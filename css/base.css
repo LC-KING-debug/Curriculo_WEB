@@ -18,7 +18,7 @@ html {
 }
 
 /* ==========================================================================
-   TRANSIÇÃO FADE-IN DO CONTEÚDO (Suave)
+   ESTRUTURA BASE E TRANSIÇÃO FADE-IN (Otimizada por Camadas)
    ========================================================================== */
 body {
     min-height: 100vh;
@@ -28,12 +28,18 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
+    background-color: #050508; /* Fallback de cor escura para evitar flashes brancos */
+    
+    /* Suavização de renderização de fontes sobre fundos escuros */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* O conteúdo principal começa invisível e aparece no Fade In */
+/* Isolamento do Fade In inicial usando aceleração de hardware */
 header, main, footer {
     opacity: 0;
-    transition: opacity 0.6s ease-out;
+    will-change: opacity;
+    transition: opacity 0.5s ease-out; /* Sigeiramente mais rápido para parecer mais responsivo */
 }
 
 body.loaded header, 
@@ -52,13 +58,17 @@ body.loaded footer {
     opacity: 0;
     pointer-events: none;
     z-index: 9999;
-    transition: opacity 0.25s ease-in; /* Escurecimento rápido */
+    will-change: opacity;
+    transition: opacity 0.22s ease-in;
 }
 
 .fade-overlay.active {
     opacity: 1;
 }
 
+/* ==========================================================================
+   BACKGROUND VIDEO & OVERLAY OTIMIZADOS
+   ========================================================================== */
 #fundo {
     position: fixed;
     inset: 0;
@@ -66,9 +76,9 @@ body.loaded footer {
     height: 100%;
     object-fit: cover;
     z-index: -2;
+    pointer-events: none; /* Impede que o vídeo intercepte cliques e toques */
     
-    
-    /* Correção de hardware para evitar artefatos visuais */
+    /* Força renderização em camada isolada da GPU */
     will-change: transform;
     transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0);
@@ -80,20 +90,23 @@ body::before {
     inset: 0;
     background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(15,15,20,0.8) 100%);
     z-index: -1;
+    pointer-events: none;
 }
 
 /* ==========================================================================
    EFEITO TEXTO PRATEADO ANIMADO (BRANCO NEON)
    ========================================================================== */
 h1, h2, h3, p, li, .nav-item, nav a, nav a:visited {
-    text-shadow: #d6d6d6 0px 0px 10px;
+    text-shadow: rgba(214, 214, 214, 0.4) 0px 0px 10px; /* Alpha reduzido para aliviar o blur */
     background: linear-gradient(120deg, #8b8b8b 0%, #d6d6d6 20%, #ffffff 35%, #d6d6d6 50%, #ffffff 70%, #ffffff 100%);
     background-size: 300%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: brilho 18s linear infinite;
-    color: white; /* Fallback de segurança */
+    color: #ffffff;
+    
+    /* Executa animação por padrão no Desktop */
+    animation: brilho 18s linear infinite; 
 }
 
 h1 { font-size: 2.2rem; font-weight: 700; }
@@ -102,10 +115,42 @@ h3 { font-size: 1.4rem; margin-bottom: 10px; }
 p { line-height: 1.7; margin-bottom: 15px; }
 
 @keyframes brilho {
-    from { background-position: -300%; }
-    to { background-position: 300%; }
+    from { background-position: -300% center; }
+    to { background-position: 300% center; }
 }
 
+/* ==========================================================================
+   MÍDIAS RESPONSIVAS & OTIMIZAÇÃO CRÍTICA MOBILE
+   ========================================================================== */
+
+/* Ajustes gerais para tablets e celulares */
+@media (max-width: 768px) {
+    #fundo {
+        object-position: right center; 
+    }
+
+    /* FOCO NO DESEMPENHO MOBILE: Desativa a animação infinita de gradiente nos textos.
+       Isso poupa processamento maciço de renderização do celular por segundo. */
+    h1, h2, h3, p, li, .nav-item, nav a, nav a:visited {
+        animation: none !important;
+        background: none !important;
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
+        color: #f5f5f7 !important; /* Mantém o tom prateado/claro estático */
+        text-shadow: rgba(255, 255, 255, 0.25) 0px 0px 8px;
+    }
+
+    /* Reduz o impacto do blur de vidro de fundo em caixas glass caso utilize */
+    .glass-box {
+        backdrop-filter: blur(4px) !important;
+        -webkit-backdrop-filter: blur(4px) !important;
+        background: rgba(12, 12, 16, 0.85) !important;
+        transform: translate3d(0,0,0) !important;
+    }
+}
+
+/* Ajustes finos para celulares menores */
 @media (max-width: 480px) {
     h1 { font-size: 1.6rem; }
     h2 { font-size: 1.5rem; }

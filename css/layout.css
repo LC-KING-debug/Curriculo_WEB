@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CABECALHO, NAVEGACAO E RODAPE
+   CABECALHO, NAVEGACAO E RODAPE (OTIMIZADOS)
    ========================================================================== */
 header {
     display: flex;
@@ -19,9 +19,14 @@ nav a {
     text-decoration: none;
     font-size: 1.05rem;
     font-weight: 500;
-    transition: 0.3s ease;
     position: relative;
     padding: 5px 0;
+    
+    /* OTIMIZAÇÃO: Transições mais limpas ativando a GPU */
+    will-change: transform, text-shadow;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
+                text-shadow 0.25s ease;
 }
 
 nav a::after {
@@ -32,8 +37,9 @@ nav a::after {
     bottom: 0;
     left: 0;
     background-color: #fff;
-    transition: 0.3s ease;
     box-shadow: 0 0 10px #fff;
+    will-change: width;
+    transition: width 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 nav a:hover::after {
@@ -41,8 +47,8 @@ nav a:hover::after {
 }
 
 nav a:hover {
-    transform: translateY(-2px);
-    text-shadow: 0 0 10px white, 0 0 20px rgb(255, 255, 255), 0 0 40px white;
+    transform: translate3d(0, -2px, 0);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 main {
@@ -61,45 +67,46 @@ main {
 footer {
     text-align: center;
     padding: 30px 20px;
-    font-size: 0.1rem;
     opacity: 0.9;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Espaço entre os ícones e o texto de copyright */
+    gap: 15px; 
+    /* Corrigido: Removido font-size 0.1rem que quebrava a herança textual */
 }
 
 .redes-sociais {
     display: flex;
-    gap: 25px; /* Espaçamento entre os ícones */
+    gap: 25px;
 }
 
 .redes-sociais a, 
 .redes-sociais a:link, 
 .redes-sociais a:visited, 
 .redes-sociais a i {
-    font-size: 1.6rem; /* Tamanho dos ícones */
+    font-size: 1.6rem;
     text-decoration: none;
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
     display: inline-block;
     
-    /* Força o mesmo efeito prateado/neon do restante do site */
+    /* Efeito prateado/neon original mantido */
     background: linear-gradient(120deg, #8b8b8b 0%, #d6d6d6 20%, #ffffff 35%, #d6d6d6 50%, #ffffff 70%, #ffffff 100%);
     background-size: 300%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: #d6d6d6 0px 0px 10px;
+    
+    /* OTIMIZAÇÃO: hardware acceleration para animação infinita de fundo */
+    will-change: transform, text-shadow, background-position;
+    transform: translate3d(0, 0, 0);
     animation: brilho 18s linear infinite;
+    transition: transform 0.25s ease, text-shadow 0.25s ease;
 }
 
-/* Efeito Hover - Aplica o brilho branco puro intenso ao passar o mouse */
 .redes-sociais a:hover, 
 .redes-sociais a:hover i {
-    transform: translateY(-1px);
-    text-shadow: 0 0 10px white, 
-                 0 0 20px rgb(255, 255, 255), 
-                 0 0 30px white;
+    transform: translate3d(0, -1px, 0);
+    text-shadow: 0 0 10px white, 0 0 20px rgba(255, 255, 255, 0.7);
     -webkit-text-fill-color: transparent;
 }
 
@@ -128,9 +135,14 @@ footer p {
     height: 3px;
     background-color: white;
     border-radius: 2px;
-    transition: 0.3s ease;
+    will-change: transform, opacity;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.25s ease;
 }
 
+/* ==========================================================================
+   MEDIA QUERIES MOBILE
+   ========================================================================== */
 @media (max-width: 868px) {
     header { padding: 20px 5%; }
     .menu-toggle { display: flex; }
@@ -140,19 +152,27 @@ footer p {
         top: 100%;
         left: 5%;
         right: 5%;
-        background: rgba(15, 15, 20, 0.95);
+        background: rgba(15, 15, 20, 0.96);
+        
+        /* Renderização suave no mobile */
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         flex-direction: column;
         gap: 0;
-        padding: 10px 0;
+        padding: 0;
         max-height: 0;
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         opacity: 0;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        
+        /* OTIMIZAÇÃO: Transição de abertura sem engasgos */
+        will-change: max-height, opacity, padding;
+        transform: translate3d(0, 0, 0);
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                    opacity 0.3s ease, 
+                    padding 0.35s ease;
     }
 
     nav.active {
@@ -165,12 +185,21 @@ footer p {
         width: 100%;
         text-align: center;
         padding: 15px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     nav a:last-child { border-bottom: none; }
     
-    .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    /* Remove efeitos pesados de hover que travam no toque mobile */
+    nav a:hover {
+        transform: none !important;
+        text-shadow: none !important;
+    }
+    nav a::after {
+        display: none !important; /* Desativa linha inferior no mobile */
+    }
+    
+    .menu-toggle.active span:nth-child(1) { transform: translate3d(0, 9px, 0) rotate(45deg); }
     .menu-toggle.active span:nth-child(2) { opacity: 0; }
-    .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+    .menu-toggle.active span:nth-child(3) { transform: translate3d(0, -9px, 0) rotate(-45deg); }
 }

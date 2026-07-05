@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuToggle = document.getElementById("mobile-menu");
     const navMenu = document.querySelector("nav");
 
-    // ==========================
-    // CAMINHO DO ÁUDIO
-    // ==========================
-
+  
+   // ==========================================================================
+    // CAMINHO DO ÁUDIO (Pasta sound na raiz)
+    // ==========================================================================
     const soundPath = window.location.pathname.includes("/pages/")
         ? "../sounds/click.mp3"
         : "sounds/click.mp3";
@@ -45,57 +45,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    // ==========================
+  // ==========================================================================
     // MENU MOBILE
-    // ==========================
-
+    // ==========================================================================
     if (menuToggle && navMenu) {
-
-        menuToggle.addEventListener("click", () => {
-
+        menuToggle.addEventListener("click", (e) => {
+            e.stopPropagation();
             playClick();
-
             menuToggle.classList.toggle("active");
             navMenu.classList.toggle("active");
-
         });
-
     }
 
-    // ==========================
-    // TODOS OS LINKS
-    // ==========================
+    // ==========================================================================
+    // DELEGAÇÃO DE EVENTOS DE ALTA PERFORMANCE (Substitui o .forEach de links)
+    // ==========================================================================
+    document.addEventListener("click", (e) => {
+        // Verifica se o elemento clicado (ou algum pai dele) é um link (tag <a>)
+        const link = e.target.closest("a");
+        if (!link) return;
 
-    document.querySelectorAll("a").forEach(link => {
+        playClick();
 
-        link.addEventListener("click", function (e) {
+        const href = link.getAttribute("href");
+        const isExternal = link.getAttribute("target") === "_blank";
 
-            playClick();
+        // Filtra links internos, âncoras vazias ou scripts vazios
+        if (!href || href.startsWith("#") || href.startsWith("javascript:")) {
+            return;
+        }
 
-            const href = this.getAttribute("href");
+        // Se for aba externa (redes sociais), deixa o navegador agir nativamente
+        if (isExternal) {
+            return;
+        }
 
-            const externo = this.target === "_blank";
+        // Bloqueia a mudança instantânea para rodar o efeito de Fade Out
+        e.preventDefault();
+        overlay.classList.add("active");
 
-            if (!href || href.startsWith("#") || href === "javascript:void(0);") {
-                return;
-            }
-
-            if (externo) {
-                return;
-            }
-
-            e.preventDefault();
-
-            overlay.classList.add("active");
-
-            setTimeout(() => {
-
-                window.location.href = href;
-
-            }, 250);
-
-        });
-
+        setTimeout(() => {
+            window.location.href = href;
+        }, 220); // Otimizado para 220ms (mais rápido e responsivo ao toque)
     });
-
 });

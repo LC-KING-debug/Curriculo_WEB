@@ -1,7 +1,8 @@
 /* ==========================================================================
-   COMPONENTES ISOLADOS (REUTILIZÁVEIS)
+   COMPONENTES ISOLADOS (REUTILIZÁVEIS OTIMIZADOS)
    ========================================================================== */
 .glass-box {
+    /* Mantido sem o backdrop-filter pesado para máxima performance */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     background: linear-gradient(135deg, rgba(15, 15, 20, 0.65) 0%, rgba(25, 25, 30, 0.55) 100%);
@@ -10,7 +11,11 @@
     padding: 40px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.1);
     margin-top: 20px;
+    
+    /* Garante estabilidade de layout durante renderização */
+    transform: translateZ(0);
 }
+
 .hero {
     text-align: left;
     max-width: 700px;
@@ -21,7 +26,7 @@
     font-style: italic;
     opacity: 0.8;
     font-size: 1rem;
-    border-left: 3px solid rgba(255,255,255,0.4);
+    border-left: 3px solid rgba(255, 255, 255, 0.4);
     padding-left: 15px;
 }
 
@@ -29,22 +34,28 @@
     display: inline-block;
     margin-top: 30px;
     padding: 12px 28px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 30px;
     text-decoration: none;
     font-weight: 600;
-    transition: 0.3s;
     text-shadow: none !important;
     -webkit-text-fill-color: initial !important;
     color: white !important;
+    
+    /* OTIMIZAÇÃO: Avisa a GPU para preparar a animação de escala e sombra */
+    will-change: transform, background, box-shadow;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                background 0.2s ease, 
+                box-shadow 0.2s ease;
 }
 
 .botao:hover {
     background: white;
     color: black !important;
-    box-shadow: 0 0 15px rgba(255,255,255,0.5);
-    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: scale(1.04); /* Sutilmente menor para evitar borrões de texto no zoom */
 }
 
 .grid-2 {
@@ -59,13 +70,19 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     padding: 25px;
-    transition: 0.3s ease;
+    
+    /* OTIMIZAÇÃO: Evita recalculação de layout no hover */
+    will-change: transform, background, border-color;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
+                background 0.25s ease, 
+                border-color 0.25s ease;
 }
 
 .card:hover {
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-5px);
+    transform: translate3d(0, -4px, 0); /* Usa translate3d em vez de translateY para ativar aceleração */
 }
 
 .lista-conhecimentos {
@@ -76,18 +93,41 @@
 }
 
 .badge {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 0.95rem;
     font-weight: 500;
 }
 
+/* ==========================================================================
+   MEDIA QUERIES COMPACTADAS E DE ALTA PERFORMANCE
+   ========================================================================== */
 @media (max-width: 868px) {
-    .glass-box { padding: 25px 20px; }
+    .glass-box { 
+        padding: 25px 20px; 
+    }
+}
+
+@media (max-width: 768px) {
+    /* Remove efeitos de hover no mobile para poupar processamento ao toque */
+    .card:hover {
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .botao:hover {
+        transform: none !important;
+        box-shadow: none !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+    }
 }
 
 @media (max-width: 480px) {
-    .botao { width: 100%; text-align: center; }
+    .botao { 
+        width: 100%; 
+        text-align: center; 
+    }
 }
