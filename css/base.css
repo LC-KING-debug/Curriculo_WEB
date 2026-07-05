@@ -71,22 +71,25 @@ body.loaded footer {
    ========================================================================== */
 #fundo {
     position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    /* Usamos vmin e uma trava de segurança para cobrir a tela 
+       sem sofrer com a alteração da barra de endereços do celular */
+    width: 100vw;
+    height: 100vh;
+    min-height: -webkit-fill-available; 
     object-fit: cover;
     z-index: -2;
-    pointer-events: none; /* Impede que o vídeo intercepte cliques e toques */
+    pointer-events: none;
     
-    /* Por padrão, mantém o vídeo centralizado de forma responsiva no desktop */
+    /* Mantém centralizado por padrão no Desktop */
     object-position: center center;
     
-    /* Força renderização em camada isolada da GPU */
+    /* Hardware acceleration máxima para isolar o vídeo da rolagem */
     will-change: transform;
     transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0);
 }
-
 body::before {
     content: "";
     position: fixed;
@@ -96,20 +99,32 @@ body::before {
     pointer-events: none;
 }
 
-/* ==========================================================================
-   EFEITO TEXTO PRATEADO ANIMADO (BRANCO NEON)
-   ========================================================================== */
 h1, h2, h3, p, li, .nav-item, nav a, nav a:visited {
-    text-shadow: rgba(214, 214, 214, 0.4) 0px 0px 10px; /* Alpha reduzido para aliviar o blur */
-    background: linear-gradient(120deg, #8b8b8b 0%, #d6d6d6 20%, #ffffff 35%, #d6d6d6 50%, #ffffff 70%, #ffffff 100%);
-    background-size: 300%;
+    /* brilho mais forte e mais limpo */
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.35),
+                 0 0 14px rgba(214, 214, 214, 0.25);
+
+    /* gradiente mais contrastado (menos “lavado”) */
+    background: linear-gradient(
+        120deg,
+        #9a9a9a 0%,
+        #ffffff 25%,
+        #eaeaea 45%,
+        #ffffff 65%,
+        #cfcfcf 100%
+    );
+
+    background-size: 200% 100%; /* menor = mais leve */
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: #ffffff;
-    
-    /* Executa animação por padrão no Desktop */
-    animation: brilho 18s linear infinite; 
+
+    /* remove redundância que não ajuda aqui */
+    color: transparent;
+
+    /* animação mais suave e menos custosa */
+    animation: brilho 14s ease-in-out infinite;
+    will-change: background-position;
 }
 
 h1 { font-size: 2.2rem; font-weight: 700; }
@@ -126,13 +141,19 @@ p { line-height: 1.7; margin-bottom: 15px; }
    MÍDIAS RESPONSIVAS & OTIMIZAÇÃO CRÍTICA MOBILE
    ========================================================================== */
 
-/* Ajustes gerais para tablets e celulares (Android / iOS) */
 @media (max-width: 768px) {
     #fundo {
-        /* CORREÇÃO DO SURFISTA: Centraliza o personagem perfeitamente
-           no visor vertical do Android em vez de jogá-lo para a direita */
-        object-position: center center !important; 
+        /* Alinha horizontalmente no centro e verticalmente a 35% (puxa o rosto para baixo) */
+        object-position: center 35% !important; 
+        
+        /* Trava física para impedir que o motor de renderização do Android 
+           atualize o layout do vídeo durante o scroll do dedo */
+        height: 100% !important;
+        position: fixed !important;
     }
+    
+    /* O restante do seu bloco mobile (h1, h2, glass-box) continua igual aqui embaixo... */
+
 
     /* FOCO NO DESEMPENHO MOBILE: Desativa a animação infinita de gradiente nos textos.
        Isso poupa processamento maciço de renderização do celular por segundo. */
