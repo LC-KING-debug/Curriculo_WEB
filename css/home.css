@@ -1,57 +1,69 @@
 /* ==========================================================================
-   home.css - ESTILOS EXCLUSIVOS DA PÁGINA INICIAL
+   HOME MOBILE
    ========================================================================== */
 
-/* Fade */
 header,
 main,
 footer {
-    transition: opacity 4.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: opacity 4.5s cubic-bezier(.4,0,.2,1) !important;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
+@media (max-width:768px){
 
     html,
-    body {
-        width: 100%;
-        height: 100dvh;
-        margin: 0;
-        overflow: hidden;
+    body{
+        width:100%;
+        height:100dvh;
+        overflow:hidden;
     }
 
-    body {
-        display: flex;
-        flex-direction: column;
+    body{
+        display:flex;
+        flex-direction:column;
     }
 
-    /* Vídeo de fundo */
-    #fundo {
-        position: fixed;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center 35%;
-        z-index: -1;
+    #fundo{
+        position:fixed;
+        inset:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center 35%;
+        z-index:-2;
     }
 
-    /* Cabeçalho */
-    header {
-        flex-shrink: 0;
+    header{
+        flex-shrink:0;
+        padding:16px 5%;
     }
 
-    /* Conteúdo ocupa o espaço restante */
-    main {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
+    main{
+        flex:1;
+        width:92%;
+        padding:15px 0;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        overflow:visible;
     }
 
-    /* Rodapé nunca é cortado */
-    footer {
-        flex-shrink: 0;
+    .glass-box{
+        padding:20px;
+        margin-top:0;
+    }
+
+    footer{
+        flex-shrink:0;
+        padding:12px;
+        gap:8px;
+    }
+
+    footer p{
+        margin:0;
+        font-size:.8rem;
+    }
+
+    .redes-sociais{
+        gap:18px;
     }
 }
