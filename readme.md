@@ -40,3 +40,5 @@ GitHub: @LC-KING-debug
 Instagram: @lc_kth_
 
 Desenvolvido com ☕, código limpo e foco em performance por Lucius Kether © 2026.
+
+<a>LINK DO DEPLOY NO RENDER: https://curriculo-web-q96e.onrender.coma</a>
