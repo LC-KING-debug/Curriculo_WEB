@@ -78,6 +78,9 @@ body.loaded footer {
     z-index: -2;
     pointer-events: none; /* Impede que o vídeo intercepte cliques e toques */
     
+    /* Por padrão, mantém o vídeo centralizado de forma responsiva no desktop */
+    object-position: center center;
+    
     /* Força renderização em camada isolada da GPU */
     will-change: transform;
     transform: translate3d(0, 0, 0);
@@ -123,10 +126,12 @@ p { line-height: 1.7; margin-bottom: 15px; }
    MÍDIAS RESPONSIVAS & OTIMIZAÇÃO CRÍTICA MOBILE
    ========================================================================== */
 
-/* Ajustes gerais para tablets e celulares */
+/* Ajustes gerais para tablets e celulares (Android / iOS) */
 @media (max-width: 768px) {
     #fundo {
-        object-position: right center; 
+        /* CORREÇÃO DO SURFISTA: Centraliza o personagem perfeitamente
+           no visor vertical do Android em vez de jogá-lo para a direita */
+        object-position: center center !important; 
     }
 
     /* FOCO NO DESEMPENHO MOBILE: Desativa a animação infinita de gradiente nos textos.
