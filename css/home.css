@@ -13,11 +13,8 @@ footer {
 /* 2. TRAVA TOTAL DE SCROLL E TELA NO MOBILE */
 @media (max-width: 768px) {
     body {
-        /* Bloqueia completamente o scroll/deslize do dedo para cima ou para baixo */
-        overflow: hidden !important;
-        position: fixed !important;
-        width: 100vw !important;
-        height: 100dvh !important;
+    overflow-x: hidden;
+    min-height: 100dvh;
     }
 
     #fundo {
