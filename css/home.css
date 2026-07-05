@@ -1,31 +1,57 @@
 /* ==========================================================================
-   home.css - ESTILOS EXCLUSIVOS DA PÁGINA INICIAL (INDEX.HTML)
+   home.css - ESTILOS EXCLUSIVOS DA PÁGINA INICIAL
    ========================================================================== */
 
-/* 1. TRANSIÇÃO DE FADE IN MAIOR */
-header, 
-main, 
+/* Fade */
+header,
+main,
 footer {
-    /* Aumentado de 0.5s para 1.5s para um efeito mais duradouro e imponente */
-    transition: opacity 4.5s cubic-bezier(0.4, 0, 0.2, 1) !important; 
+    transition: opacity 4.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* 2. TRAVA TOTAL DE SCROLL E TELA NO MOBILE */
+/* Mobile */
 @media (max-width: 768px) {
+
+    html,
     body {
-    overflow-x: hidden;
-    min-height: 100dvh;
+        width: 100%;
+        height: 100dvh;
+        margin: 0;
+        overflow: hidden;
     }
 
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Vídeo de fundo */
     #fundo {
-        /* Garante o foco perfeito no rosto do surfista prateado */
-        object-position: center 35% !important;
-        
-        /* Trava física absoluta no fundo */
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100dvh !important;
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 35%;
+        z-index: -1;
+    }
+
+    /* Cabeçalho */
+    header {
+        flex-shrink: 0;
+    }
+
+    /* Conteúdo ocupa o espaço restante */
+    main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    /* Rodapé nunca é cortado */
+    footer {
+        flex-shrink: 0;
     }
 }
