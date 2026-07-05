@@ -1,0 +1,113 @@
+/* ==========================================================================
+   RESET, VARIÁVEIS E REGRAS GLOBAIS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   TRANSIÇÃO FADE-IN DO CONTEÚDO (Suave)
+   ========================================================================== */
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: "Inter", sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* O conteúdo principal começa invisível e aparece no Fade In */
+header, main, footer {
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+body.loaded header, 
+body.loaded main, 
+body.loaded footer {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   CAMADA PARA FADE-OUT ESCURO (Rápido)
+   ========================================================================== */
+.fade-overlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.25s ease-in; /* Escurecimento rápido */
+}
+
+.fade-overlay.active {
+    opacity: 1;
+}
+
+#fundo {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    
+    
+    /* Correção de hardware para evitar artefatos visuais */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(15,15,20,0.8) 100%);
+    z-index: -1;
+}
+
+/* ==========================================================================
+   EFEITO TEXTO PRATEADO ANIMADO (BRANCO NEON)
+   ========================================================================== */
+h1, h2, h3, p, li, .nav-item, nav a, nav a:visited {
+    text-shadow: #d6d6d6 0px 0px 10px;
+    background: linear-gradient(120deg, #8b8b8b 0%, #d6d6d6 20%, #ffffff 35%, #d6d6d6 50%, #ffffff 70%, #ffffff 100%);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brilho 18s linear infinite;
+    color: white; /* Fallback de segurança */
+}
+
+h1 { font-size: 2.2rem; font-weight: 700; }
+h2 { font-size: 2rem; margin-bottom: 15px; }
+h3 { font-size: 1.4rem; margin-bottom: 10px; }
+p { line-height: 1.7; margin-bottom: 15px; }
+
+@keyframes brilho {
+    from { background-position: -300%; }
+    to { background-position: 300%; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.5rem; }
+    body { font-size: 1rem; }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos | Lucius Kether</title>
+    
+    <!-- Conexões de Fontes e Ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Estilos Customizados -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/png" href="../imgs/favicon.png">
+</head>
+<body>
+
+    <!-- Plano de Fundo Animado -->
+    <video autoplay muted loop playsinline id="fundo">
+        <source src="../assets/video/fundo.mp4" type="video/mp4">
+    </video>
+
+    <!-- Cabeçalho de Navegação -->
+    <header>
+        <h1>Lucius Kether | Portfólio</h1>
+        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir menu de navegação">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <a href="../index.html">Início</a>
+            <a href="sobre.html">Sobre Mim</a>
+            <a href="conhecimentos.html">Conhecimentos</a>
+            <a href="projetos.html" class="active">Projetos</a>
+            <a href="objetivos.html">Objetivos</a>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <section class="glass-box">
+            <h2>◉Projeto Recente: To-Do List Cloud</h2>
+            <p>Uma aplicação web moderna de gerenciamento de tarefas que evoluiu de um armazenamento local simples para uma arquitetura completa cliente-servidor com persistência de dados em nuvem.</p>
+            
+            <div class="grid-2">
+                <!-- Bloco: Front-End & UX -->
+                <div class="card">
+                    <h3>☩Interface & Funcionalidades</h3>
+                    <p>Desenvolvimento focado em dinamismo, usabilidade e sincronização em tempo real:</p>
+                    <ul class="card-list">
+                        <li><strong>Gerenciamento Ágil:</strong> Adição, conclusão e remoção de tarefas com atualizações visuais instantâneas.</li>
+                        <li><strong>Sincronização Multiplataforma:</strong> Acesso responsivo de qualquer dispositivo com dados atualizados em tempo real.</li>
+                        <li><strong>API de Motivação Integrada:</strong> Consumo de API internacional de conselhos via servidor Proxy com tradução dinâmica no backend.</li>
+                    </ul>
+                </div>
+                
+                <!-- Bloco: Back-End & Engenharia de Dados -->
+                <div class="card">
+                    <h3>☩Arquitetura & Cloud</h3>
+                    <p>Estrutura resiliente projetada para garantir a segurança e a integridade dos dados:</p>
+                    <ul class="card-list">
+                        <li><strong>Persistência na Nuvem:</strong> Integração com banco de dados relacional online, evitando perda de dados ao limpar o navegador.</li>
+                        <li><strong>Histórico Automatizado:</strong> Banco de dados estruturado com gatilhos que salvam tarefas removidas em uma tabela de auditoria com data e horário.</li>
+                        <li><strong>Evolução de Stack:</strong> Migração de arquitetura monolítica local (LocalStorage) para o modelo distribuído Cliente-Servidor.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ação Principal -->
+        <div class="action-container">
+            <a href="https://to-do-list-f8gp.onrender.com" target="_blank" rel="noopener noreferrer" class="botao">
+                Visitar o Projeto
+            </a>
+        </div>
+    </main>
+
+    <!-- Rodapé e Conexões Sociais -->
+    <footer>
+        <div class="redes-sociais">
+            <a href="https://github.com/LC-KING-debug" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/luciuskether/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/lc_kth_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+        </div>
+        <p>Que Deus esteja conosco</p>
+    </footer>
+
+    <!-- Scripts Lógicos -->
+    <script src="../js/script.js"></script>
+</body>
+</html>
