@@ -23,14 +23,13 @@ html {
 body {
     min-height: 100vh;
     overflow-x: hidden;
-    font-family: times new roman, sans-serif;text-rendering: optimizeLegibility;
+    font-family: "Times New Roman", sans-serif;
+    text-rendering: optimizeLegibility;
     font-size: 1.1rem;
     color: white;
     display: flex;
     flex-direction: column;
     background-color: #050508;
-    
-    
     
     /* Suavização de renderização de fontes sobre fundos escuros */
     -webkit-font-smoothing: antialiased;
@@ -41,7 +40,7 @@ body {
 header, main, footer {
     opacity: 0;
     will-change: opacity;
-    transition: opacity 0.5s ease-out; /* Sigeiramente mais rápido para parecer mais responsivo */
+    transition: opacity 0.5s ease-out;
 }
 
 body.loaded header, 
@@ -73,20 +72,14 @@ body.loaded footer {
    ========================================================================== */
 #fundo {
     position: fixed;
-    /* Trava o vídeo nas 4 bordas da tela de forma cirúrgica */
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
-    
-    /* REMOVIDO: height: 100vh ou 100% (isso causava o bug) */
-    
     object-fit: cover;
     z-index: -2;
     pointer-events: none;
-    
-    /* Alinhamento padrão do Desktop */
     object-position: center center;
     
     /* Força o isolamento total da camada na GPU para não sofrer com o scroll */
@@ -94,6 +87,7 @@ body.loaded footer {
     transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0);
 }
+
 body::before {
     content: "";
     position: fixed;
@@ -103,12 +97,14 @@ body::before {
     pointer-events: none;
 }
 
+/* ==========================================================================
+   EFEITO TEXTO GRADIENTE (DESKTOP)
+   ========================================================================== */
 h1, h2, h3, p, li, .nav-item, nav a, nav a:visited {
-    /* brilho mais forte e mais limpo */
+    /* Brilho forte, limpo e isolado por hardware */
     text-shadow: 0 0 6px rgba(255, 255, 255, 0.35),
                  0 0 14px rgba(214, 214, 214, 0.25);
 
-    /* gradiente mais contrastado (menos “lavado”) */
     background: linear-gradient(
         120deg,
         #9a9a9a 0%,
@@ -118,17 +114,15 @@ h1, h2, h3, p, li, .nav-item, nav a, nav a:visited {
         #cfcfcf 100%
     );
 
-    background-size: 200% 100%; /* menor = mais leve */
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    /* remove redundância que não ajuda aqui */
     color: transparent;
 
-    /* animação mais suave e menos custosa */
     animation: brilho 14s ease-in-out infinite;
     will-change: background-position;
+    contain: layout paint; /* Otimização nativa de renderização */
 }
 
 h1 { font-size: 2.2rem; font-weight: 700; }
@@ -146,37 +140,39 @@ p { line-height: 1.7; margin-bottom: 15px; }
    ========================================================================== */
 @media (max-width: 768px) {
     #fundo {
-        /* Garante que o rosto do surfista fique na posição que você pediu */
         object-position: center 35% !important; 
-        
-        /* Força o navegador a fixar o tamanho pelas bordas físicas do aparelho, 
-           impedindo o efeito "elástico" ou puxadas quando a barra de ferramentas some */
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
         width: 100vw !important;
-        
-        /* Nova unidade dinâmica que ignora a barra de navegação no mobile moderno */
         height: 100dvh !important; 
     }
     
-    /* Seus outros estilos mobile (h1, h2, glass-box) continuam aqui para baixo... */
-
-
-
-    /* FOCO NO DESEMPENHO MOBILE: Desativa a animação infinita de gradiente nos textos.
-       Isso poupa processamento maciço de renderização do celular por segundo. */
-    h1, h2, h3, p, li, .nav-item, nav a, nav a:visited {
+    /* DESEMPENHO MOBILE: Desativa apenas o gradiente infinito nos blocos pesados */
+    h1, h2, h3, p, .nav-item, nav a, nav a:visited {
         animation: none !important;
         background: none !important;
         -webkit-background-clip: initial !important;
         background-clip: initial !important;
         -webkit-text-fill-color: initial !important;
-        color: #f5f5f7 !important; /* Mantém o tom prateado/claro estático */
+        color: #f5f5f7 !important; 
         text-shadow: rgba(255, 255, 255, 0.25) 0px 0px 8px;
     }
 
-    /* Reduz o impacto do blur de vidro de fundo em caixas glass caso utilize */
+    /* SOLUÇÃO DA LISTA: Isola os itens da lista para que o efeito percorrendo funcione levemente */
+    li {
+        /* Remove o gradiente corrido de fundo do desktop para salvar CPU */
+        background: none !important;
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
+        color: #ffffff !important;
+        
+        /* ATENÇÃO: Mantém ativa a sua animação nativa de percorrer a lista */
+        animation: percorrerLista 4s ease infinite !important; /* Ajuste o nome caso sua animação use outro termo */
+        will-change: transform, opacity; /* Força aceleração 3D por GPU no mobile */
+    }
+
     .glass-box {
         backdrop-filter: blur(4px) !important;
         -webkit-backdrop-filter: blur(4px) !important;
