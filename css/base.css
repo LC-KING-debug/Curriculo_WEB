@@ -137,3 +137,46 @@ p { line-height: 1.7; margin-bottom: 15px; }
     h2 { font-size: 1.5rem; }
     body { font-size: 1rem; }
 }
+
+/* ==========================================================================
+   BARRA DE ROLAGEM (SCROLLBAR) PRATEADA & NEON GLOBAIS
+   ========================================================================== */
+
+/* 1. Configurações para Chrome, Edge, Safari e Opera (Webkit) */
+::-webkit-scrollbar {
+    width: 10px;  /* Largura da barra vertical */
+    height: 10px; /* Altura da barra horizontal (caso apareça) */
+}
+
+/* A "pista" por onde a barra corre (combinando com o fundo escuro do seu site) */
+::-webkit-scrollbar-track {
+    background: #050508; /* Baseado no background-color do seu body */
+}
+
+/* O "ponteiro" que o usuário arrasta (Prateado com efeito Neon) */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #9a9a9a 0%, #ffffff 50%, #cfcfcf 100%);
+    border-radius: 10px;
+    
+    /* Cria uma borda invisível que dá um espaçamento elegante nas laterais */
+    border: 2px solid #050508; 
+    
+    /* Brilho neon sutil prateado */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    
+    /* Aceleração de hardware para o efeito de transição */
+    will-change: background, box-shadow;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efeito quando o usuário passa o mouse por cima da barra */
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.7);
+}
+
+/* 2. Suporte para o Firefox (Padrão moderno) */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #cfcfcf #050508; /* Cor do ponteiro e cor da pista */
+}
