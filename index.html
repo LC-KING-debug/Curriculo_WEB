@@ -5,29 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucius Kether | Portfólio</title>
     
-    <!-- Fonte -->
+    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Ícones Font Awesome -->
+    <!-- Ícones Font Awesome (Duplicação removida) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- CSS Principal -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- CSS Otimizado - Carregamento Paralelo -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/home.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="imgs/favicon.png"> 
-
-
-    <!-- Ícones Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="css/home.css">
 </head>
 <body>
 
     <!-- Vídeo de Fundo -->
-    <video autoplay muted loop playsinline id="fundo">
+    <video autoplay muted loop playsinline preload="auto" id="fundo">
         <source src="assets/video/fundo.mp4" type="video/mp4">
     </video>
 
@@ -58,27 +56,23 @@
         </section>
     </main>
 
-   <!-- Rodapé com Redes Sociais -->
-<footer>
-    <div class="redes-sociais">
-        <a href="https://github.com/LC-KING-debug" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <i class="fa-brands fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/luciuskether/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i class="fa-brands fa-linkedin"></i>
-        </a>
-        <a href="https://www.instagram.com/lc_kth_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i class="fa-brands fa-instagram"></i>
-        </a>
-    </div>
-    <p>© 2026 Por Lucius Kether. Todos os direitos reservados.</p>
-    <p>✞Que Deus esteja conosco✞</p>
-   
-   
-  
-    
-</footer>
+    <!-- Rodapé com Redes Sociais -->
+    <footer>
+        <div class="redes-sociais">
+            <a href="https://github.com/LC-KING-debug" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/luciuskether/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/lc_kth_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+        </div>
+        <p>© 2026 Por Lucius Kether. Todos os direitos reservados.</p>
+        <p>✞Que Deus esteja conosco✞</p>
+    </footer>
 
-   <script src="/js/script.js"></script>
+   <script src="js/script.js"></script>
 </body>
 </html>

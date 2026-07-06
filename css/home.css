@@ -1,69 +1,84 @@
 /* ==========================================================================
-   HOME MOBILE
+   HOME MOBILE - REGRAS EXCLUSIVAS
    ========================================================================== */
 
 header,
 main,
 footer {
-    transition: opacity 4.5s cubic-bezier(.4,0,.2,1) !important;
+    transition: opacity 2.5s cubic-bezier(.4,0,.2,1) !important;
 }
 
-@media (max-width:768px){
-
-    html,
-    body{
-        width:100%;
-        height:100dvh;
-        overflow:hidden;
+@media (max-width: 768px) {
+    html, body {
+        width: 100%;
+        height: 100dvh;
+        overflow: hidden;
     }
 
-    body{
-        display:flex;
-        flex-direction:column;
+    body {
+        display: flex;
+        flex-direction: column;
     }
 
-    #fundo{
-        position:fixed;
-        inset:0;
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        object-position:center 35%;
-        z-index:-2;
+    #fundo {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100dvh;
+        object-fit: cover;
+        object-position: center 35%;
+        z-index: -2;
     }
 
-    header{
-        flex-shrink:0;
-        padding:16px 5%;
+    header {
+        flex-shrink: 0;
+        padding: 16px 5%;
     }
 
-    main{
-        flex:1;
-        width:92%;
-        padding:15px 0;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        overflow:visible;
+    main {
+        flex: 1;
+        width: 92%;
+        margin: 0 auto;
+        padding: 15px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: visible;
     }
 
-    .glass-box{
-        padding:20px;
-        margin-top:0;
+    .glass-box {
+        padding: 20px;
+        margin-top: 0;
     }
 
-    footer{
-        flex-shrink:0;
-        padding:12px;
-        gap:8px;
+    /* Correção: Fixa o rodapé para não cortar no mobile */
+    footer {
+        position: absolute;
+        bottom: 12px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 0 12px;
+        z-index: 10;
     }
 
-    footer p{
-        margin:0;
-        font-size:.8rem;
+    footer p {
+        margin: 0;
+        font-size: 0.8rem;
+        text-align: center;
+        white-space: nowrap;
     }
 
-    .redes-sociais{
-        gap:18px;
+    .redes-sociais {
+        gap: 18px;
+        margin-bottom: 2px;
     }
+}
+
+@media (max-width: 480px) {
+    footer { bottom: 8px; }
+    footer p { font-size: 0.75rem; }
 }
